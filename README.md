@@ -123,7 +123,7 @@ content-type: application/json
 请求体如下所示
 ```
 {
-    "appid": "xxx‐xxx‐xxx",
+    "app_id": "xxx‐xxx‐xxx",
     "event_code": "login",
     "data": {
         "mobile": "18605125200",
