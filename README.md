@@ -124,7 +124,7 @@ content-type: application/json
 ```
 {
     "appid": "xxx‐xxx‐xxx",
-    "eventCode": "login",
+    "event_code": "login",
     "data": {
         "mobile": "18605125200",
         "ip": "192.168.1.1"
