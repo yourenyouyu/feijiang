@@ -58,16 +58,16 @@ function _M.validate( req, res, next )
     		uuid 	= uuid(),
             success = false,
             result 	= {
-            	RiskLevel 		= "ACCEPT",
-            	HitPolicyCode 	= "",
-            	HitRules		= "request body is not json",
+            	risk_level 		= "ACCEPT",
+            	hit_policy_code = "",
+            	hit_rules		= "request body is not json",
         	}
         })
     end
 
-    local app_id = result["appid"]
-    local event_code = result["eventCode"]
-    -- 1. 客户端传入 appid与 eventType，先根据appid-eventType去策略字典里面找到所有的策略
+    local app_id = result["app_id"]
+    local event_code = result["event_code"]
+    -- 1. 客户端传入 app_id与 event_type，先根据app_id-event_type去策略字典里面找到所有的策略
     local app_event_key = string.format("%s-%s", app_id, event_code)
     local app_event_config_str = limit_count_config_dict:get(app_event_key)
     local app_event_config, err = cjson.decode(app_event_config_str)
@@ -76,9 +76,9 @@ function _M.validate( req, res, next )
     		uuid 	= uuid(),
             success = false,
             result 	= {
-            	RiskLevel 		= "ACCEPT",
-            	HitPolicyCode 	= "",
-            	HitRules		= string.format("could not decode [%s] config", app_event_key),
+            	risk_level 		= "ACCEPT",
+            	hit_policy_code = "",
+            	hit_rules		= string.format("could not decode [%s] config", app_event_key),
         	}
         })
     end
@@ -94,8 +94,8 @@ function _M.validate( req, res, next )
     -- 3.循环对应的策略，并验证此策略
     for i, policy in ipairs(app_event_config) do
         -- 依据策略设置限流字典
-        local limit_num = tonumber(policy["maxSize"])
-        local limit_window = tonumber(policy["timeSlice"])
+        local limit_num = tonumber(policy["max_size"])
+        local limit_window = tonumber(policy["time_slice"])
 
         local fields = policy["field"]
         local policy_type = #fields > 1 and "group" or "single" 
@@ -127,9 +127,9 @@ function _M.validate( req, res, next )
 							uuid 	= uuid(),
 					        success = false,
 					        result 	= {
-					        	RiskLevel 		= "REJECT",
-					        	HitPolicyCode 	= limit_count_group_key,
-					        	HitRules		= err,
+					        	risk_level 		= "REJECT",
+					        	hit_policy_code = limit_count_group_key,
+					        	hit_rules		= err,
 					    	}
 					    })
                     end
@@ -139,9 +139,9 @@ function _M.validate( req, res, next )
 						uuid 	= uuid(),
 				        success = false,
 				        result 	= {
-				        	RiskLevel 		= "ACCEPT",
-				        	HitPolicyCode 	= limit_count_group_key,
-				        	HitRules		= err,
+				        	risk_level 		= "ACCEPT",
+				        	hit_policy_code = limit_count_group_key,
+				        	hit_rules		= err,
 				    	}
 				    })
                 end
@@ -153,9 +153,9 @@ function _M.validate( req, res, next )
 						uuid 	= uuid(),
 				        success = false,
 				        result 	= {
-				        	RiskLevel 		= "ACCEPT",
-				        	HitPolicyCode 	= limit_count_group_key,
-				        	HitRules		= err,
+				        	risk_level 		= "ACCEPT",
+				        	hit_policy_code = limit_count_group_key,
+				        	hit_rules		= err,
 				    	}
 				    })
                 end
@@ -169,9 +169,9 @@ function _M.validate( req, res, next )
 								uuid 	= uuid(),
 						        success = false,
 						        result 	= {
-						        	RiskLevel 		= "REJECT",
-						        	HitPolicyCode 	= limit_count_group_key,
-						        	HitRules		= err,
+						        	risk_level 		= "REJECT",
+						        	hit_policy_code = limit_count_group_key,
+						        	hit_rules		= err,
 						    	}
 						    })
                         end
@@ -179,9 +179,9 @@ function _M.validate( req, res, next )
 							uuid 	= uuid(),
 					        success = false,
 					        result 	= {
-					        	RiskLevel 		= "ACCEPT",
-					        	HitPolicyCode 	= limit_count_group_key,
-					        	HitRules		= err,
+					        	risk_level 		= "ACCEPT",
+					        	hit_policy_code = limit_count_group_key,
+					        	hit_rules		= err,
 					    	}
 					    })
                     end
@@ -194,9 +194,9 @@ function _M.validate( req, res, next )
 		uuid 	= uuid(),
         success = true,
         result 	= {
-        	RiskLevel 		= "ACCEPT",
-        	HitPolicyCode 	= app_event_key,
-        	HitRules		= "",
+        	risk_level 		= "ACCEPT",
+        	hit_policy_code = app_event_key,
+        	hit_rules		= "",
     	}
     })
 end

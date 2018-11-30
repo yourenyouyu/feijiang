@@ -14,10 +14,10 @@ function _M.create_policy( req, res, next )
         })
     end
     -- todo     参数验证
-    local app_id = result["AppId"]
-    for i, event in ipairs(result["Events"]) do
-        local key = string.format("%s-%s", app_id, event["EventCode"])
-        local policy_str, err = cjson.encode(event["PolicyList"])
+    local app_id = result["app_id"]
+    for i, event in ipairs(result["events"]) do
+        local key = string.format("%s-%s", app_id, event["event_code"])
+        local policy_str, err = cjson.encode(event["policy_list"])
         if not policy_str then
             return res:json({
                 success = false,

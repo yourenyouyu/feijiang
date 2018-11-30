@@ -40,30 +40,30 @@ content-type: application/json
 事件策略存储格式如下
 ```
 {
-    "AppName": "YSRC",
-    "AppId": "xxx‐xxx‐xxx",
-    "Events": [
+    "app_name": "YSRC",
+    "app_id"  : "xxx‐xxx‐xxx",
+    "events"  : [
         {
-            "EventName": "用户登录",
-            "EventCode": "login",
-            "EventType": "FirstHit‐首次命中",
-            "PolicyList": [
+            "event_name" : "用户登录",
+            "event_code" : "login",
+            "event_type" : "first_hit‐首次命中",
+            "policy_list": [
                 {
                     "field": [
                         "ip"
                     ],
-                    "maxSize": 30,
-                    "timeSlice": 120,
-                    "policyType": "single‐单一策略"
+                    "max_size"   : 30,
+                    "time_slice" : 120,
+                    "policy_type": "single‐单一策略"
                 },
                 {
                     "field": [
                         "mobile",
                         "ip"
                     ],
-                    "maxSize": 10,
-                    "timeSlice": 120,
-                    "policyType": "group‐组合策略"
+                    "max_size"   : 10,
+                    "time_slice" : 120,
+                    "policy_type": "group‐组合策略"
                 }
             ]
         }
@@ -93,21 +93,21 @@ content-type: application/json
     "msg": {
         "xxx‐xxx‐xxx-login": [
             {
-                "timeSlice": 120,
-                "maxSize": 30,
+                "time_slice": 120,
+                "max_size"  : 30,
                 "field": [
                     "ip"
                 ],
-                "policyType": "single‐单一策略"
+                "policy_type": "single‐单一策略"
             },
             {
-                "timeSlice": 120,
-                "maxSize": 10,
+                "time_slice": 120,
+                "max_size": 10,
                 "field": [
                     "mobile",
                     "ip"
                 ],
-                "policyType": "group‐组合策略"
+                "policy_type": "group‐组合策略"
             }
         ]
     }
@@ -137,9 +137,9 @@ content-type: application/json
     "success": true,
     "uuid": "45afb1c0-2b16-45fb-b181-2e788a52dcc5",
     "result": {
-        "RiskLevel": "ACCEPT",
-        "HitRules": "",
-        "HitPolicyCode": "xxx‐xxx‐xxx-login"
+        "risk_level": "ACCEPT",
+        "hit_rules": "",
+        "hit_policy_code": "xxx‐xxx‐xxx-login"
     }
 }
 ```
