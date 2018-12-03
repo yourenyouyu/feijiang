@@ -15,7 +15,7 @@ app:erroruse(function(err, req, res, next)
         ngx.log(ngx.ERR, err)
         res:status(500):json({
         	success = false,
-        	msg = err
+        	msg = "internal server error"
         })
     end
 end)

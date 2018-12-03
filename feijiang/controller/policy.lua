@@ -1,5 +1,5 @@
-local limit_count_config_dict = ngx.shared.limit_count_config
 local cjson = require("cjson.safe")
+local limit_count_config_dict = ngx.shared.limit_count_config
 local _M = {
     
 }

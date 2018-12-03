@@ -19,7 +19,15 @@ openresty -p feijiang -c feijiang/nginx_prod.conf
 git clone git@github.com:yourenyouyu/feijiang.git
 cd feijiang/
 docker build -t feijiang .
-docker run -d -p 9999:9999 feijiang
+# 单机部署 基于内存
+docker run -d -p 9999:9999 feijiang 
+# 集群部署 基于redis
+docker run -p 9999:9999 -e "REDIS_HOST=10.101.177.37" -e "LIMIT_MODEL=redis"  feijiang
+```
+
+注意：基于redis做策略风控的时候，因为redis默认安全策略的问题，是不允许外部访问的，此处需要配置下其安全策略，允许飞将所在的机器可以远程访问并设置相应的密码。临时测试的话可以在redis-cli中输入如下命令即可
+```
+CONFIG SET protected-mode no
 ```
 ## 软件架构
 负载层：OpenResty
@@ -27,6 +35,20 @@ docker run -d -p 9999:9999 feijiang
 后台系统：aspnetcore+mongodb
 
 ## 使用说明
+### 配置说明
+
+默认情况下飞将基于内存的方式进行策略风控的控制，但是如果你需要分布式部署的话，你可以通过redis等第三方内存型数据库来实现，飞将默认内置了redis策略风控的实现。并通过环境变量来读取相应的配置项。配置项列表如下
+
+```
+    LIMIT_MODEL         策略风控使用的存储形式，redis 或者 memory，默认值为 memory
+    REDIS_HOST          redis 的 ip 地址 默认值为 127.0.0.1
+    REDIS_PORT          redis 的端口号 默认值为 6379
+    REDIS_DB            redis 的存储的db 默认值为 0
+    REDIS_PASSWORD      redis 的数据库密码 默认不进行密码auth认证
+    REDIS_KEEPALIVE     redis 指定连接在池中时的最大空闲超时（以毫秒为单位） 默认60000ms
+    REDIS_POOL_SIZE     redis 的连接池的大小 默认值 100
+```
+
 ### 配置飞将负载的后端管理策略
 1. 新增策略
 比如具体事件中的限制条件为同ip在2分钟内不能操作30次订单;手机号和ip组合在2分钟内变化次数不能超过10次
