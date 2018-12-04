@@ -25,6 +25,10 @@ docker run -d -p 9999:9999 feijiang
 docker run -p 9999:9999 -e "REDIS_HOST=10.101.177.37" -e "LIMIT_MODEL=redis"  feijiang
 ```
 
+3. 你也可以拉取我们构建好的镜像直接使用
+```
+docker run -p 9999:9999 yourenyouyu/feijiang
+```
 注意：基于redis做策略风控的时候，因为redis默认安全策略的问题，是不允许外部访问的，此处需要配置下其安全策略，允许飞将所在的机器可以远程访问并设置相应的密码。临时测试的话可以在redis-cli中输入如下命令即可
 ```
 CONFIG SET protected-mode no
